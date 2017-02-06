@@ -31,7 +31,7 @@ class Products(db.Model, CRUD):
 class ProductsSchema(Schema):
     id = fields.Str(dump_only=True)  # User can only read this field
     name = fields.Str(validate=not_blank_field)
-    price = fields.Integer(validate=not_blank_field)
+    price = fields.Integer()
     brand = fields.Str(validate=not_blank_field)
 
     class Meta:
