@@ -69,7 +69,7 @@ limit = 500  # will set number of itmes to 500
 | Parameter | Function | Endpoint |
 | --- | --- | --- |
 | articles | Get all products from the database | /products |
-| articles/<id> | Get product by id from the database | /products/<id> |
+| articles/{id} | Get product by id from the database | /products/{id} |
 
 
 ### Add new product to the database
