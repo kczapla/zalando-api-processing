@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from .models import Products, ProductsSchema
 from app import db
 
@@ -47,3 +47,53 @@ class ProductUpdate(Resource):
         product_query = Products.query.get_or_404(id)
         result = schema.dump(product_query).data
         return result
+
+
+class ProductSearch(Resource):
+    def __init__(self):
+        choices=['name', 'price', 'brand'], 
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+                'name', 
+                help='Item name')
+        parser.add_argument(
+                'brand', 
+                help='Brand name')
+        parser.add_argument(
+                'q', 
+                choices=choices, 
+                help='Match prodcut by any column')
+        parser.add_argument(
+                'maxitems', 
+                type=int, 
+                help='Limits max items per page')
+        parser.add_argument(
+                'sort', 
+                choices=['name', 'price', 'brand'], 
+                help='Choose column to sort')
+        parser.add_argument('direction', help='Direction of the sorting')
+        self.parser = parser
+
+    def get(self):
+        args = self.parser.parse_args()
+        products_query = None
+
+        brand_arg = args.get('brand')
+        if brand_arg:
+            print(brand_arg)
+            products_query = Products.query.filter_by(brand=brand_arg)
+
+        name_arg = args.get('name')
+        if name_arg:
+            products_query = Products.query.filter_by(name=name_arg)
+
+        sort_arg = args.get('sort')
+        if sort_arg:
+            products_query = products_query.order_by(sort_arg)
+
+        maxitems_arg = args.get('maxitems')
+        if maxitems_arg:
+            products_query = products_query.limit(maxitems_arg)
+
+        results = schema.dump(products_query, many=True).data
+        return results
