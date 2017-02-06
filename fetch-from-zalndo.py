@@ -3,10 +3,7 @@ import pprint
 import requests
 
 
-pp = pprint.PrettyPrinter(indent=8)
-
-
-r = requests.get('https://api.zalando.com/articles')
+r = requests.get('https://api.zalando.com/articles/?page=1&pageSize=100')
 products = r.json()['content']
 
 for product in products:

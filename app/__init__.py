@@ -19,6 +19,7 @@ from app.mod_products.controllers import mod_products as products_module
 app.register_blueprint(products_module, url_prefix='/api/v1/products')
 
 # Add resources
-from app.mod_products.controllers import ProductsList, ProductUpdate
+from app.mod_products.controllers import ProductsList, ProductUpdate, ProductSearch
 api.add_resource(ProductsList, '/products')
 api.add_resource(ProductUpdate, '/products/<id>')
+api.add_resource(ProductSearch, '/search')
