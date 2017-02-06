@@ -58,6 +58,7 @@ limit = 500  # will set number of itmes to 500
 ### Sorting and limiting
 
 | Parameter | Function | Endpoint |
+| --- | --- | --- |
 | maxitems | Limits the maximum number of items | /search?maxitems=5 |
 | sort | The way of sorting of the products | /search?sort=brand&maxitems=10 |
 | name | Searching for the given product | /search?name=Glasses |
@@ -66,6 +67,7 @@ limit = 500  # will set number of itmes to 500
 ### Obtaining products
 
 | Parameter | Function | Endpoint |
+| --- | --- | --- |
 | articles | Get all products from the database | /products |
 | articles/<id> | Get product by id from the database | /products/<id> |
 
