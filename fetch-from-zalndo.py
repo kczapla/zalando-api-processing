@@ -2,8 +2,8 @@ import json
 import pprint
 import requests
 
-
-r = requests.get('https://api.zalando.com/articles/?page=1&pageSize=100')
+limit = 100
+r = requests.get('https://api.zalando.com/articles/?page=1&pageSize={}'.format(limit))
 products = r.json()['content']
 
 for product in products:
