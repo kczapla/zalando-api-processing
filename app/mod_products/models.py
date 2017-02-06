@@ -24,8 +24,9 @@ class CRUD():
 class Products(db.Model, CRUD):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Numeric, nullable=False)
     brand = db.Column(db.String(250))
+    img_url = db.Column(db.String(250), nullable=False)
 
 
 class ProductsSchema(Schema):
@@ -33,6 +34,7 @@ class ProductsSchema(Schema):
     name = fields.Str(validate=not_blank_field)
     price = fields.Integer()
     brand = fields.Str(validate=not_blank_field)
+    img_url = fields.Str(validate=not_blank_field)
 
     class Meta:
         type_ = 'products'

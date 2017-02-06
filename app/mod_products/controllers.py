@@ -25,6 +25,7 @@ class ProductsList(Resource):
             product = Products(
                     name=product_dict['name'], 
                     price=product_dict['price'], 
+                    img_url=product_dict['img_url'],
                     brand=product_dict['brand'])
             product.add(product)
             query = Products.query.get(product.id)
@@ -39,3 +40,10 @@ class ProductsList(Resource):
             resp = jsonify({'error': str(e)})
             resp.status_code = 403
             return resp
+
+
+class ProductUpdate(Resource):
+    def get(self, id):
+        product_query = Products.query.get_or_404(id)
+        result = schema.dump(product_query).data
+        return result
