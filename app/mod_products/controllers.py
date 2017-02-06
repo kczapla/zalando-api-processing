@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_restful import Resource
-from .models import Brands, Products, BrandsSchema, ProductsSchema
+from .models import Products, ProductsSchema
 from app import db
 
 
@@ -12,5 +12,5 @@ schema = ProductsSchema()
 class ProductsList(Resource):
     def get(self):
         products_query = Products.query.all()
-        results = schema.dump(product_query, many=True).data
+        results = schema.dump(products_query, many=True).data
         return results

@@ -8,21 +8,31 @@ from app import db
 not_blank_field = validate.Length(min=1, error='Field cannot be blank')
 
 
-class Products(db.Model):
+class CRUD():
+    def add(self, resource):
+        db.session.add(resource)
+        return db.session.commit()
+
+    def update(self):
+        return db.session.commit()
+
+    def delete(self, resource):
+        db.session.delete(resource)
+        return db.session.commit()
+
+
+class Products(db.Model, CRUD):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    brand_id = db.Column(db.Integer, db.ForeignKey('brands.id'))
-    brand = db.relationship('Brands', backref='product')
+    brand = db.Column(db.String(250))
 
 
 class ProductsSchema(Schema):
     id = fields.Str(dump_only=True)  # User can only read this field
     name = fields.Str(validate=not_blank_field)
     price = fields.Integer(validate=not_blank_field)
-    brand = fields.Relationship(
-            related_url='/brands/{brand_id}',
-            related_url_kwargs={'brand_id': '<brand_id>'})
+    brand = fields.Str(validate=not_blank_field)
 
     class Meta:
         type_ = 'products'
